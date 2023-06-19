@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class NumberGenerator {
     private final static int BOUND = 20;
-    private final static Random random = new Random();
+    private final static Random RANDOM = new Random();
 
     /**
      * We suppose that all the arrays have the same size
@@ -29,6 +29,6 @@ public class NumberGenerator {
     }
 
     private static int getRandomNumber() {
-        return random.nextInt(BOUND + 1);
+        return RANDOM.nextInt(BOUND + 1);
     }
 }
