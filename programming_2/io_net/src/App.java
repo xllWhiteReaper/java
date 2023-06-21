@@ -8,12 +8,14 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import programming_2.io_net.utils.StreamHandler;
+
 public class App {
     public static void main(String[] args) {
         InputStream inputStream = null;
         OutputStream outputStream = null;
         URL url = null;
-        final String urlString = "http://";
+        final String urlString = "https://filesamples.com/samples/document/txt/sample3.txt";
         final String fileName = "output.txt";
 
         // readResourceStream
@@ -36,25 +38,13 @@ public class App {
         if (inputStream != null && outputStream != null) {
             // the stream can just be copied if both streams are not null
             try (InputStream in = inputStream; OutputStream out = outputStream) {
-                copyStream(in, out);
+                StreamHandler.copyStream(in, out);
             } catch (IOException e) {
-                // TODO: handle exception
-            } catch (NullPointerException e) {
-                // TODO: handle exception
+                System.out.println("Sorry, the file you tried to copy wasn't executed successfully, please try again");
             }
             // Not using the finally statement because I would have to nest another try
             // catch block, Therefore, I use a try with resources because it makes sure to
             // close the streams and makes the code neater to read
-        }
-
-    }
-
-    private static void copyStream(InputStream in, OutputStream out)
-            throws IOException {
-        int oneByte = in.read();
-        while (oneByte >= 0) { // negative value indicates end-of-stream
-            out.write(oneByte);
-            oneByte = in.read();
         }
     }
 }
