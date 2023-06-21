@@ -32,7 +32,3 @@ This program uses three additional classes to help with the sorting and timing:
 ## License
 
 This program is released under the [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0). See the `LICENSE` file for more information. Feel free to use, modify, and distribute the code as you see fit.
-
-## Project Repository
-
-The project repository can be found at: https://github.com/yourusername/sorting-performance-comparison
