@@ -18,15 +18,18 @@ public class App {
     private static URL url = null;
 
     public static void main(String[] args) {
-        final String urlString = "https://filesamples.com/samples/document/txt/sample3.txt";
+        // The next url works by today 2023/60/21
+        // final String urlString =
+        // "https://filesamples.com/samples/document/txt/sample3.txt";
+        String urlString = "";
         String fileName = "";
 
-        // readResourceStream
+        urlString = getUrlFromUser(urlString);
+
         readResourceStream(urlString);
 
         fileName = getFileNameFromUser(fileName);
 
-        // // writeResourceStream
         writeResourceStream(fileName);
     }
 
@@ -55,6 +58,14 @@ public class App {
         fileName = fileName.replace(" ", "_");
         fileName = fileName + ".txt";
         return fileName;
+    }
+
+    private static String getUrlFromUser(String urlString) {
+        while (urlString == "") {
+            System.out.println("Please enter a url that is not empty");
+            urlString = scanner.nextLine().trim();
+        }
+        return urlString;
     }
 
     private static void readResourceStream(String urlString) {
