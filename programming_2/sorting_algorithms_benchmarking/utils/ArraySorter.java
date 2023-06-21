@@ -1,7 +1,9 @@
 package programming_2.sorting_algorithms_benchmarking.utils;
 
 public class ArraySorter {
-
+    /**
+     * @param integerArray array to be sorted
+     */
     public static void insertionSort(int[] integerArray) {
         // Sort the array A into increasing order.
         int itemsSorted; // Number of items that have been sorted so far.

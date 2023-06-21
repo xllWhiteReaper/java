@@ -7,10 +7,7 @@ public class NumberGenerator {
     private final static Random RANDOM = new Random();
 
     /**
-     * We suppose that all the arrays have the same size
-     * 
-     * @param arrays
-     * @param array2
+     * @param arrays this recieves a 2d integer array
      */
     public static void fillArrays(int[]... arrays) {
         try {
@@ -28,6 +25,9 @@ public class NumberGenerator {
         }
     }
 
+    /**
+     * @return a random integer number between 0 and bound (inclusive)
+     */
     private static int getRandomNumber() {
         return RANDOM.nextInt(BOUND + 1);
     }
