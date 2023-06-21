@@ -35,8 +35,6 @@ import programming_2.sorting_algorithms_benchmarking.utils.TimeManager;
  * </ul>
  * 
  * @param ARRAY_SIZE the size of the array to sort
- * 
- * @author A-Cobra
  */
 public class App {
     private static final int ARRAY_SIZE = 100000;
