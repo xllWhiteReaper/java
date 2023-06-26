@@ -1,16 +1,30 @@
-import java.util.function.Supplier;
-
 import programming_2.sentences_generator.utils.GrammaticalCategories;
+import programming_2.sentences_generator.utils.StringHandler;
 
 public class App {
     public static void main(String[] args) throws NoSuchMethodException, SecurityException {
         for (int i = 0; i < 4; i++) {
-            System.out.println(getVerbPhrase());
+            System.out.println(getNounPhrase());
         }
     }
 
     private static String getCategory(String categoryType) {
         return GrammaticalCategories.getCategoryByName(categoryType);
+    }
+
+    private static String getNounPhrase() {
+        int possibilities = 2;
+        double probabilityDivision = (double) 1 / possibilities;
+        double probability = getRandomDouble();
+
+        if (probability <= probabilityDivision) {
+            return getCategory("properNoun");
+        } else {
+            String adjective = (getRandomDouble() > 0.5 ? " " + getCategory("adjective") : "") + ". ";
+            String verbPhrase = getRandomDouble() > 0.5 ? "who " + getVerbPhrase() : "";
+            return getCategory("determiner") + adjective + StringHandler
+                    .toTitleCase(getCategory("commonNoun")) + " " + verbPhrase;
+        }
     }
 
     private static String getVerbPhrase() {
