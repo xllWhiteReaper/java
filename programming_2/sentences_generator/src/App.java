@@ -40,7 +40,7 @@ public class App {
     private static final int SIMPLE_SENTENCES_LENGTH_LIMIT = 100;
     private static final int NUMBER_OF_SENTENCES = 5;
 
-    public static void main(String[] args) throws NoSuchMethodException, SecurityException {
+    public static void main(String[] args) {
         for (int i = 0; i < NUMBER_OF_SENTENCES; i++) {
             System.out.println(getSentence(0));
             System.out.println();
