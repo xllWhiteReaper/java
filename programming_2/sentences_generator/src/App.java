@@ -2,9 +2,11 @@ import programming_2.sentences_generator.utils.GrammaticalCategories;
 import programming_2.sentences_generator.utils.StringHandler;
 
 public class App {
+    private static final int SENTENCES_LIMIT = 100;
+
     public static void main(String[] args) throws NoSuchMethodException, SecurityException {
         for (int i = 0; i < 4; i++) {
-            System.out.println(getSentence());
+            System.out.println(getSentence(0));
         }
     }
 
@@ -12,9 +14,13 @@ public class App {
         return GrammaticalCategories.getCategoryByName(categoryType);
     }
 
-    private static String getSentence() {
+    private static String getSentence(int sentenceCounter) {
+        if (sentenceCounter > SENTENCES_LIMIT) {
+            return "";
+        }
+
         final String conjunctionAndSentence = getRandomBoolean()
-                ? " " + getCategory("conjunction") + " " + getSentence()
+                ? " " + getCategory("conjunction") + " " + getSentence(sentenceCounter + 1)
                 : "";
         return getSimpleSentence() + conjunctionAndSentence;
     }
