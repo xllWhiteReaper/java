@@ -1,4 +1,4 @@
-package programming_2.turing_machine.src.utils.turing;
+package programming_2.turing_machine.src.turing;
 
 // A test program for the TuringMachine class.  It creates three machines
 // and runs them.  The output from the program indicates the expected behavior.

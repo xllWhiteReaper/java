@@ -1,4 +1,4 @@
-package programming_2.turing_machine.src.utils.turing;
+package programming_2.turing_machine.src.turing;
 
 // A test program for the Tape class that creates a window containing
 // a graphical representation of the tape with an arrow pointing to

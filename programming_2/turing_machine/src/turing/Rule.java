@@ -1,4 +1,4 @@
-package programming_2.turing_machine.src.utils.turing;
+package programming_2.turing_machine.src.turing;
 
 /**
  * Represents one of the rules of a Turing Machine.

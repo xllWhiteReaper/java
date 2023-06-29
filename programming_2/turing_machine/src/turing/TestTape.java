@@ -1,15 +1,20 @@
-package programming_2.turing_machine.src.utils.turing;
+package programming_2.turing_machine.src.turing;
+
+import programming_2.turing_machine.src.models.Tape;
 
 // A test program for the Tape class that calls most of the methods in that class.
 //
-// The output from this program should be:  Tape Conents:  Hello World
+// The output from this program should be:  Tape Contents:  Hello World
 //                                          Final position at the W
 
 public class TestTape {
 
 	public static void main(String[] args) {
 
-		Tape tape = new Tape();
+		// Tape tape = new Tape();
+		// modified this constructor because the default doesn't initiate a cell
+		Tape tape = new Tape(new Cell());
+
 		for (int i = 0; i < "World".length(); i++) {
 			tape.setContent("World".charAt(i));
 			tape.moveRight();
@@ -20,7 +25,7 @@ public class TestTape {
 			tape.setContent("Hello".charAt(i));
 			tape.moveRight();
 		}
-		System.out.println("Tape Conents:  " + tape.getTapeContents());
+		System.out.println("Tape Contents:  " + tape.getTapeContents());
 		tape.moveRight();
 		System.out.println("Final position at the " + tape.getContent());
 	}

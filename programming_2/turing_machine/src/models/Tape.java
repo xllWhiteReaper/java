@@ -1,23 +1,23 @@
 package programming_2.turing_machine.src.models;
 
-import programming_2.turing_machine.src.utils.turing.Cell;
+import programming_2.turing_machine.src.turing.Cell;
 
 public class Tape {
     private Cell head;
     private Cell tail;
     private Cell currentCell;
 
-    Tape() {
+    public Tape() {
         head = null;
         tail = null;
         currentCell = null;
     }
 
-    Tape(Cell cell) {
+    public Tape(Cell cell) {
         pushCell(cell);
     }
 
-    Tape(Cell... cells) {
+    public Tape(Cell... cells) {
         for (Cell cell : cells) {
             pushCell(cell);
         }
@@ -103,15 +103,15 @@ public class Tape {
         return tapeContents;
     }
 
-    public String getTapeContentsRecursion() {
-        return getTapeContentsRecursion(head);
+    public String getTapeContentsWithRecursion() {
+        return getTapeContentsWithRecursion(head);
     }
 
-    private String getTapeContentsRecursion(Cell head) {
+    private String getTapeContentsWithRecursion(Cell head) {
         if (head == null) {
             return "";
         }
         String charToAdd = head.content == ' ' ? "" : String.valueOf(head.content);
-        return charToAdd + getTapeContentsRecursion(head.next);
+        return charToAdd + getTapeContentsWithRecursion(head.next);
     }
 }

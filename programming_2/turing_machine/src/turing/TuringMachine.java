@@ -1,4 +1,4 @@
-package programming_2.turing_machine.src.utils.turing;
+package programming_2.turing_machine.src.turing;
 
 import java.util.ArrayList;
 
