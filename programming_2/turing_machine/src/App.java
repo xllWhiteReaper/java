@@ -11,7 +11,7 @@ public class App {
         // TestTape.test(args);
         // printLines(2);
 
-        // DOESN'T WORK
+        // WORKS
         System.out.println("TEST 2: TestTapeGUI");
         TestTapeGUI.test(args);
         printLines(2);

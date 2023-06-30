@@ -78,7 +78,7 @@ public class TestTapeGUI extends JPanel {
 	public TestTapeGUI(String initialContent) {
 		// tape = new Tape();
 		// modified this constructor because the default doesn't initiate a cell
-		Tape tape = new Tape(new Cell());
+		tape = new Tape(new Cell());
 		if (initialContent != null && initialContent.length() > 0) {
 			for (int i = 0; i < initialContent.length(); i++) {
 				tape.setContent(initialContent.charAt(i));
