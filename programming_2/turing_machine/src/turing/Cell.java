@@ -9,6 +9,7 @@ public class Cell {
 	public Cell prev; // Pointer to the cell to the left of this one.
 
 	public Cell() {
+		content = ' ';
 	}
 
 	public Cell(char content) {

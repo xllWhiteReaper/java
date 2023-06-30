@@ -6,18 +6,20 @@ import programming_2.turing_machine.src.turing.TestTuringMachine;
 
 public class App {
     public static void main(String[] args) {
+        // // WORKS
         // System.out.println("TEST 1: TestTape");
         // TestTape.test(args);
         // printLines(2);
 
         // DOESN'T WORK
-        // System.out.println("TEST 2: TestTapeGUI");
-        // TestTapeGUI.test(args);
-        // printLines(2);
-
-        System.out.println("TEST 2: TestTuringMachine");
-        TestTuringMachine.test(args);
+        System.out.println("TEST 2: TestTapeGUI");
+        TestTapeGUI.test(args);
         printLines(2);
+
+        // // WORKS
+        // System.out.println("TEST 3: TestTuringMachine");
+        // TestTuringMachine.test(args);
+        // printLines(2);
     }
 
     private static void printLines() {

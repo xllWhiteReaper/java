@@ -94,22 +94,21 @@ public class Tape {
         Cell headCopy = head;
         String tapeContents = "";
         while (headCopy != null) {
-            String charToAdd = headCopy.content == ' ' ? "" : String.valueOf(headCopy.content);
+            String charToAdd = String.valueOf(headCopy.content);
             tapeContents += charToAdd;
             headCopy = headCopy.next;
         }
-        return tapeContents;
+        return tapeContents.trim();
     }
 
     public String getTapeContentsWithRecursion() {
-        return getTapeContentsWithRecursion(head);
+        return getTapeContentsWithRecursion(head).trim();
     }
 
     private String getTapeContentsWithRecursion(Cell head) {
         if (head == null) {
             return "";
         }
-        String charToAdd = head.content == ' ' ? "" : String.valueOf(head.content);
-        return charToAdd + getTapeContentsWithRecursion(head.next);
+        return String.valueOf(head.content) + getTapeContentsWithRecursion(head.next);
     }
 }
