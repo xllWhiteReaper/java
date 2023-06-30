@@ -1,6 +1,4 @@
-package programming_2.turing_machine.src.models;
-
-import programming_2.turing_machine.src.turing.Cell;
+package programming_2.turing_machine.src.turing;
 
 public class Tape {
     private Cell head;

@@ -5,7 +5,7 @@ package programming_2.turing_machine.src.turing;
 
 public class TestTuringMachine {
 
-	public static void main(String[] args) {
+	public static void test(String[] args) {
 
 		TuringMachine writeMachine = new TuringMachine();
 
@@ -18,9 +18,10 @@ public class TestTuringMachine {
 		});
 
 		System.out.println("Running machine #1.  Output should be:  Hello");
-		String writeMachineOutput = writeMachine.run(new Tape());
+		// modified this constructor because the default doesn't initiate a cell
+		// String writeMachineOutput = writeMachine.run(new Tape());
+		String writeMachineOutput = writeMachine.run(new Tape(new Cell()));
 		System.out.println("Actual output is:                       " + writeMachineOutput);
-
 		TuringMachine badMachine = new TuringMachine();
 		badMachine.addRules(new Rule[] { // writes ERROR on the tape then fails
 				new Rule(0, ' ', 1, 'R', true),
@@ -30,9 +31,12 @@ public class TestTuringMachine {
 				new Rule(4, ' ', 5, 'E', true) // no rule for state 5!
 		});
 
-		System.out.println("\nRunning machine #2.  Should throw an IllegalStateExcpetion.");
+		System.out.println("\nRunning machine #2.  Should throw an IllegalStateException.");
 		try {
-			badMachine.run(new Tape());
+			// modified this constructor because the default doesn't initiate a cell
+			// badMachine.run(new Tape());
+			badMachine.run(new Tape(new Cell()));
+
 			System.out.println("No Error was thrown.");
 		} catch (IllegalStateException e) {
 			System.out.println("Caught Illegal Argument Exception, with error message:");
@@ -40,7 +44,9 @@ public class TestTuringMachine {
 		}
 
 		String input = "aababbbababbabbaba"; // a string of a's and b's for input to the copy machine
-		Tape tape = new Tape();
+		// modified this constructor because the default doesn't initiate a cell
+		// Tape tape = new Tape();
+		Tape tape = new Tape(new Cell());
 		for (int i = 0; i < input.length(); i++) {
 			tape.setContent(input.charAt(i));
 			tape.moveRight();

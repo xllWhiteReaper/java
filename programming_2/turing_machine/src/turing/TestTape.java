@@ -1,7 +1,5 @@
 package programming_2.turing_machine.src.turing;
 
-import programming_2.turing_machine.src.models.Tape;
-
 // A test program for the Tape class that calls most of the methods in that class.
 //
 // The output from this program should be:  Tape Contents:  Hello World
@@ -9,7 +7,7 @@ import programming_2.turing_machine.src.models.Tape;
 
 public class TestTape {
 
-	public static void main(String[] args) {
+	public static void test(String[] args) {
 
 		// Tape tape = new Tape();
 		// modified this constructor because the default doesn't initiate a cell

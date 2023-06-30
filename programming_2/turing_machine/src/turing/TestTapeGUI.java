@@ -14,7 +14,7 @@ import javax.swing.*;
 
 public class TestTapeGUI extends JPanel {
 
-	public static void main(String[] args) {
+	public static void test(String[] args) {
 		JFrame window = new JFrame("Test Tape");
 		window.setContentPane(new TestTapeGUI("Test"));
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -76,7 +76,9 @@ public class TestTapeGUI extends JPanel {
 	}
 
 	public TestTapeGUI(String initialContent) {
-		tape = new Tape();
+		// tape = new Tape();
+		// modified this constructor because the default doesn't initiate a cell
+		Tape tape = new Tape(new Cell());
 		if (initialContent != null && initialContent.length() > 0) {
 			for (int i = 0; i < initialContent.length(); i++) {
 				tape.setContent(initialContent.charAt(i));
