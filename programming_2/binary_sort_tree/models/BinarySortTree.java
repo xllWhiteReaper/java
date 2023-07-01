@@ -4,11 +4,15 @@ import java.util.Comparator;
 
 public class BinarySortTree<T> {
 
+    private Long size = 0L;
     private TreeNode<T> root;
-    private Comparator<T> comparator;
+    private final Comparator<T> COMPARATOR;
+    private Long maximumTreeLeafDepth = -1L;
+    private Long leavesDepthSum = 0L;
+    private Long numberOfLeaves = 0L;
 
     public BinarySortTree(Comparator<T> comparator) {
-        this.comparator = comparator;
+        this.COMPARATOR = comparator;
     }
 
     /**
@@ -22,12 +26,14 @@ public class BinarySortTree<T> {
             // The tree is empty. Set root to point to a new node containing
             // the new item. This becomes the only node in the tree.
             root = new TreeNode<T>(newItem);
+            size += 1;
+            // System.out.println("Inserted node " + newItem + " at root");
             return;
         }
         TreeNode<T> runner; // Runs down the tree to find a place for newItem.
         runner = root; // Start at the root.
         while (true) {
-            int comparison = comparator.compare(newItem, runner.item);
+            int comparison = COMPARATOR.compare(newItem, runner.item);
             if (comparison < 0) {
                 // Since the new item is less than the item in runner,
                 // it belongs in the left subtree of runner. If there
@@ -35,6 +41,9 @@ public class BinarySortTree<T> {
                 // Otherwise, advance runner down one level to the left.
                 if (runner.left == null) {
                     runner.left = new TreeNode<T>(newItem);
+                    size += 1;
+                    // System.out.println("Inserted node " + newItem + " at the left of " +
+                    // runner.item);
                     return; // New item has been added to the tree.
                 } else
                     runner = runner.left;
@@ -45,6 +54,9 @@ public class BinarySortTree<T> {
                 // Otherwise, advance runner down one level to the right.
                 if (runner.right == null) {
                     runner.right = new TreeNode<T>(newItem);
+                    size += 1;
+                    // System.out.println("Inserted node " + newItem + " at the right of " +
+                    // runner.item);
                     return; // New item has been added to the tree.
                 } else
                     runner = runner.right;
@@ -63,7 +75,7 @@ public class BinarySortTree<T> {
         } else if (item.equals(root.item)) {
             // Yes, the item has been found in the root node.
             return true;
-        } else if (comparator.compare(item, root.item) < 0) {
+        } else if (COMPARATOR.compare(item, root.item) < 0) {
             // If the item occurs, it must be in the left subtree.
             return treeContains(root.left, item);
         } else {
@@ -74,6 +86,39 @@ public class BinarySortTree<T> {
 
     public void inOrderTraversal() {
         treeList(root);
+    }
+
+    public Long size() {
+        return this.size;
+    }
+
+    public void getSumOfAllLeavesDepthsAndHighestDepth() {
+        leavesDepthSum = 0L;
+        maximumTreeLeafDepth = -1L;
+        numberOfLeaves = 0L;
+        addLeaveDepthAndFindHighestDepth(root, 0);
+        System.out.println();
+        System.out.println();
+        System.out.println("The sum of the depths for all the leaves is: " + leavesDepthSum);
+        System.out.println("The number of leaves is: " + numberOfLeaves);
+        final double averageLeaveDepth = (double) leavesDepthSum / numberOfLeaves;
+        System.out.printf("The average depth for all the leaves is:  %.3f%n", averageLeaveDepth);
+        System.out.println("The maximum leave depth is: " + maximumTreeLeafDepth);
+    }
+
+    private void addLeaveDepthAndFindHighestDepth(TreeNode<T> node, int depth) {
+        if (node == null) {
+            return;
+        }
+        if (node.left == null && node.right == null) {
+            if (depth > maximumTreeLeafDepth) {
+                maximumTreeLeafDepth = Long.valueOf(depth);
+            }
+            leavesDepthSum += depth;
+            numberOfLeaves += 1;
+        }
+        addLeaveDepthAndFindHighestDepth(node.left, depth + 1);
+        addLeaveDepthAndFindHighestDepth(node.right, depth + 1);
     }
 
     /**

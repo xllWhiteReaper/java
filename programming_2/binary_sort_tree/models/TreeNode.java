@@ -8,9 +8,9 @@ public class TreeNode<T> {
     TreeNode<T> left; // Pointer to left subtree.
     TreeNode<T> right; // Pointer to right subtree.
 
-    TreeNode(T str) {
+    TreeNode(T item) {
         // Constructor. Make a node containing the specified string.
         // Note that left and right pointers are initially null.
-        item = str;
+        this.item = item;
     }
 } // end nested class TreeNode
