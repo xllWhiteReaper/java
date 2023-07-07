@@ -4,7 +4,7 @@ public class Indexes {
     private int start;
     private int end;
 
-    Indexes(int start, int end) {
+    public Indexes(int start, int end) {
         this.start = start;
         this.end = end;
     }
