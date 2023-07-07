@@ -1,69 +1,52 @@
 package programming_2.bnf_set_calculator.src;
 
 import java.util.Iterator;
-import java.util.List;
 import java.util.Scanner;
-// v2, would be interesting <set-result> := <set> <operator> <set> | <set-result> <operator> <set>
-// <set-result> := <set> <operator> <set> | <set>
-// v2
-// <set-operation>:= <set> <operator> <set>
-// <set> := "[" <set-element> "]"
-// <set-element> := <number> | <set-element> "," <number> | null
-// <operator> := + | * | -
-// <number> := 0 | 1 | ... | 9 | <number><number>
+
 import java.util.Set;
 import java.util.TreeSet;
-
-import javax.naming.LimitExceededException;
 
 import programming_2.bnf_set_calculator.models.IncorrectSetOperationSyntaxException;
 import programming_2.bnf_set_calculator.models.IncorrectSetSyntaxException;
 import programming_2.bnf_set_calculator.models.Indexes;
 import programming_2.bnf_set_calculator.models.NonNegativeArgument;
+import programming_2.bnf_set_calculator.utils.Text;
 
+// <set-operation>:= <set> <operator> <set>
+// <set> := "[" <set-element> "]"
+// <set-element> := <number> | <set-element> "," <number> | null
+// <operator> := + | * | -
+// <number> := 0 | 1 | ... | 9 | <number><number>
 public class App {
-    public static final Scanner Scanner = new Scanner(System.in);
+    public static final Scanner scanner = new Scanner(System.in);
+    public static final int closingDelay = 1000;
 
     public static void main(String[] args) throws Exception {
-        // Set<Integer> resultingSet = operateSets(
-        // new TreeSet<>(List.of(1, 2, 3, 4)),
-        // new TreeSet<>(List.of(3, 4, 5)),
-        // "-");
-        // for (int integer : resultingSet) {
-        // System.out.println("Integer in resulting set: " + integer);
-        // }
+        String option = "";
 
-        Set<Integer> resultingSet = parseInputAndGetResultingSet("     [1,2,3,45  ] + [6,   8,10, 20]");
-
-        StringBuilder sb = new StringBuilder("[");
-        Iterator<Integer> iterator = resultingSet.iterator();
-        while (iterator.hasNext()) {
-            sb.append(iterator.next());
-            if (iterator.hasNext()) {
-                sb.append(", ");
+        while (!option.equals("Q")) {
+            printMenu();
+            option = scanner.nextLine().toUpperCase();
+            if (option.equals("Q")) {
+                continue;
             }
+            Set<Integer> resultingSet = parseInputAndGetResultingSet(option);
+            printSetAsStringRepresentation(resultingSet);
+            Text.printNLines(2);
+            Text.printSeparation();
         }
-        sb.append("]");
-        String resultingSetStringRepresentation = sb.toString();
+        System.out.println("Thanks for using the app");
+        Thread.sleep(closingDelay);
+        scanner.close();
+    }
 
-        System.out.println("Resulting set: " + resultingSetStringRepresentation);
-        // System.out.print("Resulting set: [ ");
-        // for (int integer : resultingSet) {
-        // // if(integer== resultingSet){}
-        // System.out.print(integer + ", ");
-        // }
-        // System.out.print(" ]");
+    private static void printMenu() {
+        Text.printNLines(2);
+        System.out.println("Welcome to the SETS Calculator");
+        System.out.println("In order to quit from the program, please input q o Q");
+        System.out.println(
+                "The structure of the input must be: [elem1, elem2, ...., elemn] <operator> [elemm, elemo, ...., elemz]");
 
-        // getIntegerSetFromStringRepresentation("[1, 24,67]");
-
-        // parseInputAndGetResultingSet("null");
-
-        // Set<Integer> set1 = getIntegerSetFromStringRepresentation(
-        // " [1, 2, -7 , 4,4,8,,,,0,5,6, 7,] ");
-
-        // for (Integer integer : set1) {
-        // System.out.println("Number in the set:" + integer + ":end");
-        // }
     }
 
     public static Set<Integer> getIntegerSetFromStringRepresentation(String inputSetStringRepresentation)
@@ -148,7 +131,7 @@ public class App {
         // return new TreeSet<Integer>(List.of(1, 2, 3, 4));
     }
 
-    private static Set<Integer> operateSets(Set<Integer> set1, Set<Integer> set2, String operator)
+    private static <T> Set<T> operateSets(Set<T> set1, Set<T> set2, String operator)
             throws IllegalArgumentException {
         if (set1 == null || set2 == null) {
             throw new IllegalArgumentException("Sets can not be null");
@@ -172,5 +155,20 @@ public class App {
             default:
                 throw new IllegalArgumentException("There is no such operation as \"" + operator + "\" defined");
         }
+    }
+
+    private static void printSetAsStringRepresentation(Set<Integer> resultingSet) {
+        StringBuilder sb = new StringBuilder("[");
+        Iterator<Integer> iterator = resultingSet.iterator();
+        while (iterator.hasNext()) {
+            sb.append(iterator.next());
+            if (iterator.hasNext()) {
+                sb.append(", ");
+            }
+        }
+        sb.append("]");
+        String resultingSetStringRepresentation = sb.toString();
+
+        System.out.println("Resulting set: " + resultingSetStringRepresentation);
     }
 }
