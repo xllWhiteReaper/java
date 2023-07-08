@@ -12,11 +12,16 @@ import programming_2.bnf_set_calculator.models.Indexes;
 import programming_2.bnf_set_calculator.models.NonNegativeArgument;
 import programming_2.bnf_set_calculator.utils.Text;
 
-// <set-operation>:= <set> <operator> <set>
-// <set> := "[" <set-element> "]"
-// <set-element> := <number> | <set-element> "," <number> | null
-// <operator> := + | * | -
-// <number> := 0 | 1 | ... | 9 | <number><number>
+/**
+ * <set-operation>:= <set> <operator> <set>
+ * <set> := "[" <set-element> "]"
+ * <set-element> := <number> | <set-element> "," <number> | null
+ * <operator> := + | * | -
+ * <number> := 0 | 1 | ... | 9 | <number><number>
+ * 
+ * @author A-Cobra
+ * @version 1.0.SNAPSHOT
+ */
 public class App {
     public static final Scanner scanner = new Scanner(System.in);
     public static final int closingDelay = 1000;
@@ -128,7 +133,6 @@ public class App {
             throw new IncorrectSetOperationSyntaxException("The set operation has to have an operator");
         }
         return operateSets(set1, set2, operator);
-        // return new TreeSet<Integer>(List.of(1, 2, 3, 4));
     }
 
     private static <T> Set<T> operateSets(Set<T> set1, Set<T> set2, String operator)

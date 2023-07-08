@@ -1,8 +1,5 @@
 package programming_2.bnf_set_calculator.utils;
 
-import java.io.Console;
-import java.io.IOException;
-
 public class Text {
     public static void printNLines(int numberOfLines) {
         for (int i = 0; i < numberOfLines; i++) {
