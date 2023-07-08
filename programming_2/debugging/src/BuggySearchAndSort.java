@@ -91,7 +91,7 @@ public class BuggySearchAndSort {
 		for (int top = array.length - 1; top > 0; top--) {
 			int positionOfMax = 0;
 			for (int i = 1; i <= top; i++) {
-				if (array[1] > array[positionOfMax])
+				if (array[i] > array[positionOfMax])
 					positionOfMax = i;
 			}
 			int temp = array[top]; // swap top item with biggest item
