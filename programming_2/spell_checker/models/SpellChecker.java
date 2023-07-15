@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class SpellChecker {
     private final Set<String> DICTIONARY;
@@ -38,5 +39,23 @@ public class SpellChecker {
 
     public boolean isCorrectlySpelled(String wordToCheck) {
         return DICTIONARY.contains(wordToCheck);
+    }
+
+    public Set<String> getPossibleCorrectSpellings(String wronglySpelledWord) {
+        Set<String> possibleCorrectSpellings = new TreeSet<String>();
+        possibleCorrectSpellings.addAll(getSimilarWordsByDeletion(wronglySpelledWord));
+
+        return possibleCorrectSpellings;
+    }
+
+    private Set<String> getSimilarWordsByDeletion(String word) {
+        Set<String> similarWords = new TreeSet<String>();
+        for (int i = 0; i < word.length(); i++) {
+            String wordWithDeletedCharacter = word.substring(0, i) + word.substring(i + 1);
+            if (isCorrectlySpelled(wordWithDeletedCharacter)) {
+                similarWords.add(wordWithDeletedCharacter);
+            }
+        }
+        return similarWords;
     }
 }

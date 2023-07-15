@@ -1,7 +1,11 @@
 package programming_2.spell_checker.src;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
@@ -17,6 +21,7 @@ public class App {
     }
 
     private static void readUserFileAndDetectWronglySpelledWords() {
+        Set<String> misspelledWords = new TreeSet<String>();
         File userFile = getInputFileNameFromUser();
         if (userFile == null) {
             return;
@@ -26,11 +31,19 @@ public class App {
             while (fileReader.hasNext()) {
                 String word = fileReader.next().toLowerCase();
                 if (!spellChecker.isCorrectlySpelled(word)) {
-                    System.out.println("Wrongly spelled word: " + word);
+                    misspelledWords.add(word);
                 }
             }
         } catch (Exception e) {
             // TODO: handle exception
+        }
+
+        for (String misspelledWord : misspelledWords) {
+            System.out.println("Misspelled word: " + misspelledWord);
+            System.out.println(
+                    "Suggestions: " + String.join(", ", spellChecker.getPossibleCorrectSpellings(misspelledWord)));
+            System.out.println();
+            System.out.println();
         }
     }
 
