@@ -1,11 +1,13 @@
 package programming_2.hash_table.models;
 
-public class Node<T> {
-    T data;
-    Node<T> next;
+public class Node<K, V> {
+    K key;
+    V value;
+    Node<K, V> next;
 
-    Node(T data) {
-        this.data = data;
+    Node(K key, V value) {
+        this.key = key;
+        this.value = value;
         next = null;
     }
 }
