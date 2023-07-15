@@ -29,4 +29,12 @@ public class HashTable {
         Node<String, String> foundNode = TABLE_DATA[getHashIndex(key)].find(key);
         return foundNode == null ? null : foundNode.value;
     }
+
+    public void remove(String key) {
+        TABLE_DATA[getHashIndex(key)].remove(key);
+    }
+
+    public boolean containsKey(String key) {
+        return TABLE_DATA[getHashIndex(key)].find(key) == null ? false : true;
+    }
 }

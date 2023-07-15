@@ -17,6 +17,9 @@ public class App {
         HashTable hashTable = new HashTable();
         hashTable.put("key1", "value1");
         hashTable.put("key1", "updatedValue1");
+        System.out.println("contains key1 before removal " + hashTable.containsKey("key1"));
+        hashTable.remove("key1");
+        System.out.println("contains key1 after removal " + hashTable.containsKey("key1"));
         System.out.println("GETTING");
         System.out.println(hashTable.get("key1"));
         System.out.println("hashTable.get(key2)");

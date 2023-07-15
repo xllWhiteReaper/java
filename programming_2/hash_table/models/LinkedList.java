@@ -19,17 +19,17 @@ public class LinkedList<K, V> {
         printList();
     }
 
-    public void remove(K key, V value) {
+    public void remove(K key) {
         if (head == null) {
             return;
         }
-        if (head.key.equals(key) && head.value.equals(value)) {
+        if (head.key.equals(key)) {
             head = head.next;
             return;
         }
         Node<K, V> current = head;
         while (current.next != null) {
-            if (head.key.equals(key) && head.value.equals(value)) {
+            if (head.key.equals(key)) {
                 current.next = current.next.next;
                 return;
             }
