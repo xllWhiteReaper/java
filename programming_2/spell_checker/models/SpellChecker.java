@@ -8,10 +8,11 @@ import java.util.Set;
 
 public class SpellChecker {
     private final Set<String> DICTIONARY;
-    private final String WORDS_FILE_PATH = "/programming_2/spell_checker/resources/words.txt";
+    private final String WORDS_FILE_PATH = "programming_2/spell_checker/resources/words.txt";
 
     public SpellChecker() {
-        DICTIONARY = new HashSet<>();
+        DICTIONARY = new HashSet<String>();
+        readFile();
     }
 
     private void readFile() {
@@ -22,12 +23,16 @@ public class SpellChecker {
             }
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
+            System.out.println("Wrong path");
             e.printStackTrace();
         }
     }
 
     private void addWordToDictionary(String word) {
-        word = word.toLowerCase();
-        DICTIONARY.add(word);
+        DICTIONARY.add(word.toLowerCase());
+    }
+
+    public long getDictionarySize() {
+        return DICTIONARY.size();
     }
 }
