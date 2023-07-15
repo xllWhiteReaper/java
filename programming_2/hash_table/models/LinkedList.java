@@ -15,26 +15,25 @@ public class LinkedList<K, V> {
             tail.next = newNode;
             tail = newNode;
         }
-        System.out.println("Added item");
-        printList();
     }
 
-    public void remove(K key) {
+    public boolean remove(K key) {
         if (head == null) {
-            return;
+            return false;
         }
         if (head.key.equals(key)) {
             head = head.next;
-            return;
+            return true;
         }
         Node<K, V> current = head;
         while (current.next != null) {
             if (head.key.equals(key)) {
                 current.next = current.next.next;
-                return;
+                return true;
             }
             current = current.next;
         }
+        return false;
     }
 
     public void printList() {
@@ -47,11 +46,8 @@ public class LinkedList<K, V> {
     }
 
     public Node<K, V> find(K key) {
-        System.out.println("FINDING " + key);
         Node<K, V> currentNode = head;
         while (currentNode != null) {
-            System.out.println("searching key " + key);
-            System.out.println("current key " + currentNode.key);
             if (currentNode.key.equals(key)) {
                 return currentNode;
             }
