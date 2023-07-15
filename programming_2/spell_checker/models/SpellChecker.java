@@ -35,4 +35,8 @@ public class SpellChecker {
     public long getDictionarySize() {
         return DICTIONARY.size();
     }
+
+    public boolean isCorrectlySpelled(String wordToCheck) {
+        return DICTIONARY.contains(wordToCheck);
+    }
 }
