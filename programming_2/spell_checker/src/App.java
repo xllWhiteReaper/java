@@ -39,9 +39,12 @@ public class App {
         }
 
         for (String misspelledWord : misspelledWords) {
+            final Set<String> possibleCorrectSpellings = spellChecker.getPossibleCorrectSpellings(misspelledWord);
+            final String suggestions = possibleCorrectSpellings.isEmpty() ? "(no suggestions available)"
+                    : String.join(", ", possibleCorrectSpellings);
             System.out.println("Misspelled word: " + misspelledWord);
             System.out.println(
-                    "Suggestions: " + String.join(", ", spellChecker.getPossibleCorrectSpellings(misspelledWord)));
+                    "Suggestions: " + suggestions);
             System.out.println();
             System.out.println();
         }
