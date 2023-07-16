@@ -47,7 +47,8 @@ public class SpellChecker {
         Set<String> possibleCorrectSpellings = new TreeSet<String>();
         // possibleCorrectSpellings.addAll(getSimilarWordsByDeletion(wronglySpelledWord));
         // possibleCorrectSpellings.addAll(getSimilarWordsByReplacement(wronglySpelledWord));
-        possibleCorrectSpellings.addAll(getSimilarWordsByInsertion(wronglySpelledWord));
+        // possibleCorrectSpellings.addAll(getSimilarWordsByInsertion(wronglySpelledWord));
+        possibleCorrectSpellings.addAll(getSimilarWordsByInterchangingConsecutiveCharacters(wronglySpelledWord));
 
         return possibleCorrectSpellings;
     }
@@ -88,6 +89,22 @@ public class SpellChecker {
                 if (isCorrectlySpelled(wordWithReplacedCharacter)) {
                     similarWords.add(wordWithReplacedCharacter);
                 }
+            }
+        }
+        return similarWords;
+    }
+
+    private Set<String> getSimilarWordsByInterchangingConsecutiveCharacters(String word) {
+        Set<String> similarWords = new TreeSet<String>();
+        for (int i = 0; i < word.length() - 1; i++) {
+            char[] chars = word.toCharArray();
+            char temp = chars[i];
+            chars[i] = chars[i + 1];
+            chars[i + 1] = temp;
+            String newWord = new String(chars);
+
+            if (isCorrectlySpelled(newWord)) {
+                similarWords.add(newWord);
             }
         }
         return similarWords;
