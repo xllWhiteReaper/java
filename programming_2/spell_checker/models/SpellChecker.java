@@ -37,18 +37,16 @@ public class SpellChecker {
     }
 
     public boolean isCorrectlySpelled(String wordToCheck) {
-        return DICTIONARY.contains(wordToCheck);
+        return DICTIONARY.contains(wordToCheck.toLowerCase());
     }
 
     public Set<String> getPossibleCorrectSpellings(String wronglySpelledWord) {
-        Set<String> possibleCorrectSpellings = new TreeSet<String>();
-        possibleCorrectSpellings.addAll(getSimilarWordsByDeletion(wronglySpelledWord));
-        possibleCorrectSpellings.addAll(getSimilarWordsByReplacement(wronglySpelledWord));
-        possibleCorrectSpellings.addAll(getSimilarWordsByInsertion(wronglySpelledWord));
-        possibleCorrectSpellings.addAll(getSimilarWordsByInterchangingConsecutiveCharacters(wronglySpelledWord));
-        possibleCorrectSpellings.addAll(getSimilarWordsByGeneratingTwoWords(wronglySpelledWord));
-
-        return possibleCorrectSpellings;
+        return new CustomTreeSet<String>()
+                .addSet(getSimilarWordsByDeletion(wronglySpelledWord))
+                .addSet(getSimilarWordsByReplacement(wronglySpelledWord))
+                .addSet(getSimilarWordsByInsertion(wronglySpelledWord))
+                .addSet(getSimilarWordsByInterchangingConsecutiveCharacters(wronglySpelledWord))
+                .addSet(getSimilarWordsByGeneratingTwoWords(wronglySpelledWord));
     }
 
     private Set<String> getSimilarWordsByDeletion(String word) {
