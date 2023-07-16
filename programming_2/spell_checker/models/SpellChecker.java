@@ -15,19 +15,16 @@ public class SpellChecker {
 
     public SpellChecker() {
         DICTIONARY = new HashSet<String>();
-        readFile();
     }
 
-    private void readFile() {
+    public void readFile() throws FileNotFoundException {
         try (Scanner fileIn = new Scanner(new File(CORRECTLY_SPELLED_WORDS_FILE_PATH))) {
             while (fileIn.hasNext()) {
                 String word = fileIn.next();
                 addWordToDictionary(word);
             }
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            System.out.println("Wrong path");
-            e.printStackTrace();
+            throw new FileNotFoundException("The file with the provided path wasn't found");
         }
     }
 
@@ -45,10 +42,10 @@ public class SpellChecker {
 
     public Set<String> getPossibleCorrectSpellings(String wronglySpelledWord) {
         Set<String> possibleCorrectSpellings = new TreeSet<String>();
-        // possibleCorrectSpellings.addAll(getSimilarWordsByDeletion(wronglySpelledWord));
-        // possibleCorrectSpellings.addAll(getSimilarWordsByReplacement(wronglySpelledWord));
-        // possibleCorrectSpellings.addAll(getSimilarWordsByInsertion(wronglySpelledWord));
-        // possibleCorrectSpellings.addAll(getSimilarWordsByInterchangingConsecutiveCharacters(wronglySpelledWord));
+        possibleCorrectSpellings.addAll(getSimilarWordsByDeletion(wronglySpelledWord));
+        possibleCorrectSpellings.addAll(getSimilarWordsByReplacement(wronglySpelledWord));
+        possibleCorrectSpellings.addAll(getSimilarWordsByInsertion(wronglySpelledWord));
+        possibleCorrectSpellings.addAll(getSimilarWordsByInterchangingConsecutiveCharacters(wronglySpelledWord));
         possibleCorrectSpellings.addAll(getSimilarWordsByGeneratingTwoWords(wronglySpelledWord));
 
         return possibleCorrectSpellings;
@@ -86,7 +83,13 @@ public class SpellChecker {
         for (int i = 0; i < word.length(); i++) {
             charIterator = new CharIterator();
             while (charIterator.hasNext()) {
-                String wordWithReplacedCharacter = word.substring(0, i) + charIterator.next() + word.substring(i);
+                String nextChar = charIterator.next();
+                if (i == word.length() - 1 && isCorrectlySpelled(word + nextChar)) {
+                    similarWords.add(word + nextChar);
+                    continue;
+                }
+
+                String wordWithReplacedCharacter = word.substring(0, i) + nextChar + word.substring(i);
                 if (isCorrectlySpelled(wordWithReplacedCharacter)) {
                     similarWords.add(wordWithReplacedCharacter);
                 }
