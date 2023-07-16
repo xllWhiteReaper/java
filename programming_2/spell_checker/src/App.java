@@ -29,6 +29,7 @@ public class App {
     private static void readUserFileAndDetectWronglySpelledWords() {
         Set<String> misspelledWords = new TreeSet<String>();
         File userFile = getInputFileFromUser();
+
         if (userFile == null) {
             System.out.println("The user didn't select a file, closing...");
             return;
