@@ -8,4 +8,12 @@ public class CustomTreeSet<E> extends TreeSet<E> {
         this.addAll(setToAdd);
         return this;
     }
+
+    @SafeVarargs
+    public final CustomTreeSet<E> addSets(Set<E>... setsToAdd) {
+        for (Set<E> setToAdd : setsToAdd) {
+            this.addAll(setToAdd);
+        }
+        return this;
+    }
 }

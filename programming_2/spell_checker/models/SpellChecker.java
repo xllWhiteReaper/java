@@ -41,12 +41,12 @@ public class SpellChecker {
     }
 
     public Set<String> getPossibleCorrectSpellings(String wronglySpelledWord) {
-        return new CustomTreeSet<String>()
-                .addSet(getSimilarWordsByDeletion(wronglySpelledWord))
-                .addSet(getSimilarWordsByReplacement(wronglySpelledWord))
-                .addSet(getSimilarWordsByInsertion(wronglySpelledWord))
-                .addSet(getSimilarWordsByInterchangingConsecutiveCharacters(wronglySpelledWord))
-                .addSet(getSimilarWordsByGeneratingTwoWords(wronglySpelledWord));
+        return new CustomTreeSet<String>().addSets(
+                getSimilarWordsByDeletion(wronglySpelledWord),
+                getSimilarWordsByReplacement(wronglySpelledWord),
+                getSimilarWordsByInsertion(wronglySpelledWord),
+                getSimilarWordsByInterchangingConsecutiveCharacters(wronglySpelledWord),
+                getSimilarWordsByGeneratingTwoWords(wronglySpelledWord));
     }
 
     private Set<String> getSimilarWordsByDeletion(String word) {
