@@ -11,7 +11,7 @@ import programming_2.spell_checker.utils.CharIterator;
 
 public class SpellChecker {
     private final Set<String> DICTIONARY;
-    private final String WORDS_FILE_PATH = "programming_2/spell_checker/resources/words.txt";
+    private final String CORRECTLY_SPELLED_WORDS_FILE_PATH = "programming_2/spell_checker/resources/words.txt";
 
     public SpellChecker() {
         DICTIONARY = new HashSet<String>();
@@ -19,7 +19,7 @@ public class SpellChecker {
     }
 
     private void readFile() {
-        try (Scanner fileIn = new Scanner(new File(WORDS_FILE_PATH))) {
+        try (Scanner fileIn = new Scanner(new File(CORRECTLY_SPELLED_WORDS_FILE_PATH))) {
             while (fileIn.hasNext()) {
                 String word = fileIn.next();
                 addWordToDictionary(word);
@@ -46,7 +46,8 @@ public class SpellChecker {
     public Set<String> getPossibleCorrectSpellings(String wronglySpelledWord) {
         Set<String> possibleCorrectSpellings = new TreeSet<String>();
         // possibleCorrectSpellings.addAll(getSimilarWordsByDeletion(wronglySpelledWord));
-        possibleCorrectSpellings.addAll(getSimilarWordsByReplacing(wronglySpelledWord));
+        // possibleCorrectSpellings.addAll(getSimilarWordsByReplacement(wronglySpelledWord));
+        possibleCorrectSpellings.addAll(getSimilarWordsByInsertion(wronglySpelledWord));
 
         return possibleCorrectSpellings;
     }
@@ -62,13 +63,28 @@ public class SpellChecker {
         return similarWords;
     }
 
-    private Set<String> getSimilarWordsByReplacing(String word) {
+    private Set<String> getSimilarWordsByReplacement(String word) {
         Set<String> similarWords = new TreeSet<String>();
         CharIterator charIterator;
         for (int i = 0; i < word.length(); i++) {
             charIterator = new CharIterator();
             while (charIterator.hasNext()) {
                 String wordWithReplacedCharacter = word.substring(0, i) + charIterator.next() + word.substring(i + 1);
+                if (isCorrectlySpelled(wordWithReplacedCharacter)) {
+                    similarWords.add(wordWithReplacedCharacter);
+                }
+            }
+        }
+        return similarWords;
+    }
+
+    private Set<String> getSimilarWordsByInsertion(String word) {
+        Set<String> similarWords = new TreeSet<String>();
+        CharIterator charIterator;
+        for (int i = 0; i < word.length(); i++) {
+            charIterator = new CharIterator();
+            while (charIterator.hasNext()) {
+                String wordWithReplacedCharacter = word.substring(0, i) + charIterator.next() + word.substring(i);
                 if (isCorrectlySpelled(wordWithReplacedCharacter)) {
                     similarWords.add(wordWithReplacedCharacter);
                 }
