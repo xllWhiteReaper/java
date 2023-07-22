@@ -1,7 +1,5 @@
 package programming_2.hash_table.models;
 
-import javax.xml.crypto.Data;
-
 public class LinkedList<K, V> {
     private Node<K, V> head;
     private Node<K, V> tail;

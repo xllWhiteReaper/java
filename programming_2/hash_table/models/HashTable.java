@@ -39,7 +39,7 @@ public class HashTable {
     }
 
     public boolean containsKey(String key) {
-        return getBucket(key).find(key) == null ? false : true;
+        return getBucket(key).find(key) != null;
     }
 
     public long size() {
