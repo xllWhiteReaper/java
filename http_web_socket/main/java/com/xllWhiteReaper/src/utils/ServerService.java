@@ -19,12 +19,6 @@ public class ServerService {
     private final String FILES_DIRECTORY = "main/java/com/xllWhiteReaper/src/root";
     private final String OK = "OK";
     private final int OK_CODE = 200;
-    // private final String BAD_REQUEST = "BAD_REQUEST";
-    // private final int BAD_REQUEST_CODE = 400;
-    // private final String NOT_FOUND = "NOT_FOUND";
-    // private final int NOT_FOUND_CODE = 404;
-    // private final String INTERNAL_SERVER_ERROR = "INTERNAL_SERVER_ERROR";
-    // private final int INTERNAL_SERVER_ERROR_CODE = 500;
     final Map<String, String> mimeTypeMap = new HashMap<String, String>();
     final Map<String, Status> fullErrorNameMap = Map.of(
             "OK", new Status(200, "OK", "The request was successfully placed"),
@@ -40,7 +34,6 @@ public class ServerService {
     }
 
     public void getFile(Socket connectionSocket, String fileName) throws ConnectIOException {
-        StringBuilder stringBuilder = new StringBuilder();
         int statusCode = OK_CODE;
         String requestStatus = OK;
         File requestedFile = new File(FILES_DIRECTORY + fileName);
@@ -49,15 +42,10 @@ public class ServerService {
         try (PrintWriter printWriter = new PrintWriter(connectionSocket.getOutputStream())) {
             if (!requestedFile.isFile() && fileName.indexOf(".") == -1) {
                 Status status = fullErrorNameMap.get("BAD_REQUEST");
-                // statusCode = BAD_REQUEST_CODE;
-                // requestStatus = BAD_REQUEST;
-                System.out.println("Directory");
                 displayErrorFallbackHTML(connectionSocket, status.getTextStatus());
                 return;
             } else if (!requestedFile.exists()) {
                 Status status = fullErrorNameMap.get("NOT_FOUND");
-                // statusCode = NOT_FOUND_CODE;
-                // requestStatus = NOT_FOUND;
                 displayErrorFallbackHTML(connectionSocket, status.getTextStatus());
                 return;
             } else if (requestedFile.canRead()) {
@@ -84,37 +72,18 @@ public class ServerService {
     private void displayErrorFallbackHTML(Socket connectionSocket, String requestStatus) {
         Status status = fullErrorNameMap.get(requestStatus);
         int statusCode = status.getCode();
-        System.out.println("displaying html");
         String response = "<html><head><title>Error</title></head><body>\r\n" + //
                 "<h2>Error: " + statusCode + " " + requestStatus + "</h2>\r\n" + //
                 "<p>" + status.getMessage() + "</p>\r\n" + //
                 "</body></html>";
 
-        System.out.println("response");
-        System.out.println(response);
-
         try (PrintWriter printWriter = new PrintWriter(connectionSocket.getOutputStream())) {
             printWriter.print("HTTP/1.1 " + statusCode + " " + requestStatus + "\r\n");
             printWriter.print("Connection: close" + "\r\n");
-            // printWriter.print("Content-Length: " + 1024 + "\r\n");
             printWriter.print("Content-Type: " + mimeTypeMap.get("html") + "\r\n");
             printWriter.print("\r\n");
             printWriter.print(response);
             printWriter.flush();
-
-            // try (OutputStream out = new
-            // BufferedOutputStream(connectionSocket.getOutputStream());) {
-            // for (byte currentByte : response.getBytes()) {
-            // System.out.println("Current byte " + currentByte);
-            // out.write(currentByte);
-            // }
-            // out.flush();
-            // } catch (IOException e) {
-            // System.out.println("Error");
-            // }
-
-            // printWriter.print(response);
-            // printWriter.flush();
         } catch (Exception e) {
             closeConnection(connectionSocket);
         }
@@ -140,7 +109,6 @@ public class ServerService {
             connection.close();
         } catch (Exception e) {
         }
-        System.out.println("Connection closed.");
     }
 
     private String getMimeType(String fileName) {

@@ -1,4 +1,3 @@
-
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -10,11 +9,10 @@ import utils.ServerService;
 /**
  * The main() program in this class is designed to read requests from
  * a Web browser and display the requests on standard output. The
- * program sets up a listener on port 50505. It can be contacted
+ * program sets up a listener on port 8081. It can be contacted
  * by a Web browser running on the same machine using a URL of the
- * form http://localhost:505050/path/to/resource.html This method
- * does not return any data to the web browser. It simply reads the
- * request, writes it to standard output, and then closes the connection.
+ * form http://localhost:8081/resource.suffix This method
+ * returns files or html depending on if found the resource or not
  * The program continues to run, and the server continues to listen
  * for new connections, until the program is terminated (by clicking the
  * red "stop" square in Eclipse or by Control-C on the command line).
@@ -26,9 +24,6 @@ public class ReadRequest {
 	 * be greater than 1024 and lest than 65535.
 	 */
 	private static final int LISTENING_PORT = 8081;
-
-	private static final String FILES_DIRECTORY = "main/java/com/xllWhiteReaper/src/root";
-
 	private static final ServerService serverService = new ServerService();
 
 	/**
@@ -74,23 +69,10 @@ public class ReadRequest {
 			try {
 				serverService.getFile(connection, fileName);
 			} catch (ConnectIOException e) {
-				System.out.println("Error while communicating with client: " + e);
+				throw new Exception("Error while communicating with client: " + e.getMessage());
 			}
-
-			// // printWriter.println("Content-Type: text/plain");
-			// // printWriter.println("Content: POSTMAN");
-			// printWriter.write("{\"name\":\"name1\",\"age\":age1}");
-			// printWriter.flush();
-			// // while (true) {
-			// // if (!in.hasNextLine())
-			// // break;
-			// // String line = in.nextLine();
-			// // if (line.trim().length() == 0)
-			// // break;
-			// // System.out.println(" " + line);
-			// // }
 		} catch (Exception e) {
-			System.out.println("Error while communicating with client: " + e);
+			e.printStackTrace();
 		} finally { // make SURE connection is closed before returning!
 			try {
 				connection.close();
@@ -99,41 +81,4 @@ public class ReadRequest {
 			System.out.println("Connection closed.");
 		}
 	}
-
-	/**
-	 * Handle communication with one client connection. This method reads
-	 * lines of text from the client and prints them to standard output.
-	 * It continues to read until the client closes the connection or
-	 * until an error occurs or until a blank line is read. In a connection
-	 * from a Web browser, the first blank line marks the end of the request.
-	 * This method can run indefinitely, waiting for the client to send a
-	 * blank line.
-	 * NOTE: This method does not throw any exceptions. Exceptions are
-	 * caught and handled in the method, so that they will not shut down
-	 * the server.
-	 * 
-	 * @param connection the connected socket that will be used to
-	 *                   communicate with the client.
-	 */
-	// private static void handleConnection(Socket connection) {
-	// try {
-	// Scanner in = new Scanner(connection.getInputStream());
-	// while (true) {
-	// if (!in.hasNextLine())
-	// break;
-	// String line = in.nextLine();
-	// if (line.trim().length() == 0)
-	// break;
-	// System.out.println(" " + line);
-	// }
-	// } catch (Exception e) {
-	// System.out.println("Error while communicating with client: " + e);
-	// } finally { // make SURE connection is closed before returning!
-	// try {
-	// connection.close();
-	// } catch (Exception e) {
-	// }
-	// System.out.println("Connection closed.");
-	// }
-	// }
 }
