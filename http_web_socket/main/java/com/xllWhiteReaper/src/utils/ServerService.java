@@ -1,6 +1,5 @@
 package utils;
 
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -14,25 +13,30 @@ import java.rmi.ConnectIOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import models.Status;
+
 public class ServerService {
     private final String FILES_DIRECTORY = "main/java/com/xllWhiteReaper/src/root";
     private final String OK = "OK";
     private final int OK_CODE = 200;
-    private final String BAD_REQUEST = "BAD_REQUEST";
-    private final int BAD_REQUEST_CODE = 400;
-    private final String NOT_FOUND = "NOT_FOUND";
-    private final int NOT_FOUND_CODE = 404;
-    private final String INTERNAL_SERVER_ERROR = "INTERNAL_SERVER_ERROR";
-    private final int INTERNAL_SERVER_ERROR_CODE = 500;
+    // private final String BAD_REQUEST = "BAD_REQUEST";
+    // private final int BAD_REQUEST_CODE = 400;
+    // private final String NOT_FOUND = "NOT_FOUND";
+    // private final int NOT_FOUND_CODE = 404;
+    // private final String INTERNAL_SERVER_ERROR = "INTERNAL_SERVER_ERROR";
+    // private final int INTERNAL_SERVER_ERROR_CODE = 500;
     final Map<String, String> mimeTypeMap = new HashMap<String, String>();
-    final Map<String, String> fullErrorNameMap = Map.of(
+    final Map<String, Status> fullErrorNameMap = Map.of(
+            "OK", new Status(200, "OK", "The request was successfully placed"),
             "BAD_REQUEST",
-            "The link provided by the user is malformed due to invalid syntax or missing parameters, please provide a file name with a valid suffix",
-            "NOT_FOUND", "The resource that you requested does not exist on this server.",
-            "INTERNAL_SERVER
-        
+            new Status(400, "BAD_REQUEST",
+                    "The link provided by the user is malformed due to invalid syntax or missing parameters, please provide a file name with a valid suffix"),
+            "NOT_FOUND", new Status(404, "NOT_FOUND", "The resource that you requested does not exist on this server."),
+            "INTERNAL_SERVER",
+            new Status(500, "INTERNAL_SERVER", "There was an error in the server, please try again later."));
+
     public ServerService() {
-            fillHashMap();
+        fillHashMap();
     }
 
     public void getFile(Socket connectionSocket, String fileName) throws ConnectIOException {
@@ -44,15 +48,17 @@ public class ServerService {
         String contentType = getMimeType(fileName);
         try (PrintWriter printWriter = new PrintWriter(connectionSocket.getOutputStream())) {
             if (!requestedFile.isFile() && fileName.indexOf(".") == -1) {
+                Status status = fullErrorNameMap.get("BAD_REQUEST");
                 // statusCode = BAD_REQUEST_CODE;
                 // requestStatus = BAD_REQUEST;
                 System.out.println("Directory");
-                displayErrorFallbackHTML(connectionSocket, BAD_REQUEST_CODE, BAD_REQUEST);
+                displayErrorFallbackHTML(connectionSocket, status.getTextStatus());
                 return;
             } else if (!requestedFile.exists()) {
+                Status status = fullErrorNameMap.get("NOT_FOUND");
                 // statusCode = NOT_FOUND_CODE;
                 // requestStatus = NOT_FOUND;
-                displayErrorFallbackHTML(connectionSocket, NOT_FOUND_CODE, NOT_FOUND);
+                displayErrorFallbackHTML(connectionSocket, status.getTextStatus());
                 return;
             } else if (requestedFile.canRead()) {
                 // There were no errors
@@ -75,11 +81,13 @@ public class ServerService {
         }
     }
 
-    private void displayErrorFallbackHTML(Socket connectionSocket, int statusCode, String requestStatus) {
+    private void displayErrorFallbackHTML(Socket connectionSocket, String requestStatus) {
+        Status status = fullErrorNameMap.get(requestStatus);
+        int statusCode = status.getCode();
         System.out.println("displaying html");
         String response = "<html><head><title>Error</title></head><body>\r\n" + //
                 "<h2>Error: " + statusCode + " " + requestStatus + "</h2>\r\n" + //
-                "<p>" + fullErrorNameMap.get(requestStatus) + "</p>\r\n" + //
+                "<p>" + status.getMessage() + "</p>\r\n" + //
                 "</body></html>";
 
         System.out.println("response");
