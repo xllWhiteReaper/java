@@ -49,7 +49,8 @@ public class ReadRequest {
 				Socket connection = serverSocket.accept();
 				System.out.println("\nConnection from "
 						+ connection.getRemoteSocketAddress());
-				handleConnection(connection);
+				ConnectionThread thread = new ConnectionThread(connection);
+				thread.start();
 			}
 		} catch (Exception e) {
 			System.out.println("Server socket shut down unexpectedly!");
@@ -79,6 +80,21 @@ public class ReadRequest {
 			} catch (Exception e) {
 			}
 			System.out.println("Connection closed.");
+		}
+	}
+
+	/**
+	 * To help with multithreading
+	 */
+	private static class ConnectionThread extends Thread {
+		Socket connection;
+
+		public ConnectionThread(Socket connection) {
+			this.connection = connection;
+		}
+
+		public void run() {
+			handleConnection(connection);
 		}
 	}
 }
