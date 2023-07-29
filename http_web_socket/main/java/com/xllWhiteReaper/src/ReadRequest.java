@@ -1,10 +1,12 @@
 package http_web_socket.main.java.com.xllWhiteReaper.src;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.rmi.ConnectIOException;
 import java.util.Scanner;
+
+import http_web_socket.main.java.com.xllWhiteReaper.src.utils.ServerService;
 
 /**
  * The main() program in this class is designed to read requests from
@@ -24,7 +26,11 @@ public class ReadRequest {
 	 * The server listens on this port. Note that the port number must
 	 * be greater than 1024 and lest than 65535.
 	 */
-	private final static int LISTENING_PORT = 8081;
+	private static final int LISTENING_PORT = 8081;
+
+	private static final String FILES_DIRECTORY = "main/java/com/xllWhiteReaper/src/root";
+
+	private static final ServerService serverService = new ServerService();
 
 	/**
 	 * Main program opens a server socket and listens for connection
@@ -58,23 +64,32 @@ public class ReadRequest {
 		}
 	}
 
-	private static void handleConnection(Socket connection) throws IOException {
-		try (PrintWriter printWriter = new PrintWriter(connection.getOutputStream())) {
-			Scanner in = new Scanner(connection.getInputStream());
-			// System.out.println("in.nextLine()");
-			// System.out.println(in.nextLine());
-			// printWriter.println("Content-Type: text/plain");
-			// printWriter.println("Content: POSTMAN");
-			printWriter.write("{\"name\":\"name1\",\"age\":age1}");
-			printWriter.flush();
-			// while (true) {
-			// if (!in.hasNextLine())
-			// break;
-			// String line = in.nextLine();
-			// if (line.trim().length() == 0)
-			// break;
-			// System.out.println(" " + line);
-			// }
+	private static void handleConnection(Socket connection) {
+		try (PrintWriter printWriter = new PrintWriter(connection.getOutputStream());
+				Scanner inputStream = new Scanner(connection.getInputStream())) {
+			final String[] requestData = inputStream.nextLine().split(" ");
+			final String method = requestData[0];
+			final String fileName = requestData[1];
+			final String transferProtocol = requestData[2];
+
+			try {
+				serverService.getTextFile(connection, fileName);
+			} catch (ConnectIOException e) {
+				System.out.println("Error while communicating with client: " + e);
+			}
+
+			// // printWriter.println("Content-Type: text/plain");
+			// // printWriter.println("Content: POSTMAN");
+			// printWriter.write("{\"name\":\"name1\",\"age\":age1}");
+			// printWriter.flush();
+			// // while (true) {
+			// // if (!in.hasNextLine())
+			// // break;
+			// // String line = in.nextLine();
+			// // if (line.trim().length() == 0)
+			// // break;
+			// // System.out.println(" " + line);
+			// // }
 		} catch (Exception e) {
 			System.out.println("Error while communicating with client: " + e);
 		} finally { // make SURE connection is closed before returning!
