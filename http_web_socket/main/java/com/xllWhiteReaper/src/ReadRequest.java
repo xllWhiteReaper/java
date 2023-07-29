@@ -1,4 +1,3 @@
-package http_web_socket.main.java.com.xllWhiteReaper.src;
 
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -6,7 +5,7 @@ import java.net.Socket;
 import java.rmi.ConnectIOException;
 import java.util.Scanner;
 
-import http_web_socket.main.java.com.xllWhiteReaper.src.utils.ServerService;
+import utils.ServerService;
 
 /**
  * The main() program in this class is designed to read requests from
@@ -29,7 +28,7 @@ public class ReadRequest {
 	private static final int LISTENING_PORT = 8081;
 
 	private static final String FILES_DIRECTORY = "main/java/com/xllWhiteReaper/src/root";
-	
+
 	private static final ServerService serverService = new ServerService();
 
 	/**
@@ -73,7 +72,7 @@ public class ReadRequest {
 			final String transferProtocol = requestData[2];
 
 			try {
-				serverService.getTextFile(connection, fileName);
+				serverService.getFile(connection, fileName);
 			} catch (ConnectIOException e) {
 				System.out.println("Error while communicating with client: " + e);
 			}
