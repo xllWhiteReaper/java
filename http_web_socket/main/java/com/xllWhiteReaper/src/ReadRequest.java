@@ -29,7 +29,7 @@ public class ReadRequest {
 	private static final int LISTENING_PORT = 8081;
 
 	private static final String FILES_DIRECTORY = "main/java/com/xllWhiteReaper/src/root";
-
+	
 	private static final ServerService serverService = new ServerService();
 
 	/**
