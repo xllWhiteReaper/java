@@ -220,9 +220,10 @@ public class GuiDemo extends JFrame {
 			if (text.equals("Color..."))
 				putValue(Action.SHORT_DESCRIPTION,
 						"<html>Use a solid color for background<br>instead of an image.</html>");
-			else if (text.equals("Custom..."))
-				putValue(Action.SHORT_DESCRIPTION, "<html>Select an image file<br>to use as the background.</html>");
-			else
+			else if (text.equals("Custom...")) {
+				final String customIconStringPath = "resources/action_icons/fileopen.png";
+				putValue(Action.SMALL_ICON, Util.iconFromResource(customIconStringPath));
+			} else
 				putValue(Action.SHORT_DESCRIPTION, "Use this image as the background.");
 
 		}
