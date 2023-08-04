@@ -217,15 +217,16 @@ public class GuiDemo extends JFrame {
 				putValue(Action.SMALL_ICON,
 						Util.iconFromResource("resources/images/" + text.toLowerCase() + "_thumbnail.jpeg"));
 			}
-			if (text.equals("Color..."))
+			if (text.equals("Color...")) {
+				putValue(Action.SMALL_ICON, new ImageIcon(getCustomColorPickIcon()));
 				putValue(Action.SHORT_DESCRIPTION,
-						"<html>Use a solid color for background<br>instead of an image.</html>");
-			else if (text.equals("Custom...")) {
+						"Pick a color for the background."); // tooltip
+			} else if (text.equals("Custom...")) {
 				final String customIconStringPath = "resources/action_icons/fileopen.png";
 				putValue(Action.SMALL_ICON, Util.iconFromResource(customIconStringPath));
-			} else
+			} else {
 				putValue(Action.SHORT_DESCRIPTION, "Use this image as the background.");
-
+			}
 		}
 
 		public void actionPerformed(ActionEvent evt) {
@@ -251,6 +252,31 @@ public class GuiDemo extends JFrame {
 				Image bg = Util.getImageResource("resources/images/" + text.toLowerCase() + ".jpeg");
 				drawPanel.setBackgroundImage(bg);
 			}
+		}
+
+		private BufferedImage getCustomColorPickIcon() {
+			int width = 32;
+			int height = 32;
+			int padding = 5;
+			int radius = width - padding;
+			BufferedImage customColorPickIcon = new BufferedImage(width, height,
+					BufferedImage.TYPE_INT_RGB);
+			Graphics2D g2d = customColorPickIcon.createGraphics();
+			// Set background color to light gray
+			g2d.setColor(Color.LIGHT_GRAY);
+			g2d.fillRect(0, 0, width, height);
+			// Draw red sector
+			g2d.setColor(Color.RED);
+			// g2d.fillRect(0, 0, 32, 32);
+			g2d.fillArc(padding / 2, padding / 2, radius, radius, 30, 120);
+			// Draw green sector
+			g2d.setColor(Color.GREEN);
+			g2d.fillArc(padding / 2, padding / 2, radius, radius, 150, 120);
+			// Draw blue sector
+			g2d.setColor(Color.BLUE);
+			g2d.fillArc(padding / 2, padding / 2, radius, radius, 270, 120);
+			g2d.dispose();
+			return customColorPickIcon;
 		}
 	}
 

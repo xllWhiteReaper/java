@@ -16,14 +16,15 @@ import javax.swing.JApplet;
  * This class provides some static utility functions for working
  * with resources (to avoid having to look up all the messy details).
  * Resources are stored somewhere on the class path, usually in their
- * own package.  They are located by paths to files, such as
+ * own package. They are located by paths to files, such as
  * "resources/images/mandelbrot.jpeg".
  */
 public class Util {
-	
+
 	/**
-	 * Load an image resource.  In this case, the data will actually
+	 * Load an image resource. In this case, the data will actually
 	 * be read into memory only when the Image is first drawn.
+	 * 
 	 * @param pathToResource the path to the resource.
 	 * @return the image, or null if the resource can't be located.
 	 */
@@ -35,11 +36,12 @@ public class Util {
 		Image img = Toolkit.getDefaultToolkit().createImage(loc);
 		return img;
 	}
-	
+
 	/**
-	 * Load a buffered image from a resource.  In this case, the method
+	 * Load a buffered image from a resource. In this case, the method
 	 * does not return until the image data has been read and stored
 	 * in memory.
+	 * 
 	 * @param pathToResource the path to the resource.
 	 * @return the image, or null if the resource can't be loaded.
 	 */
@@ -50,14 +52,14 @@ public class Util {
 			return null;
 		try {
 			return ImageIO.read(loc);
-		} 
-		catch (Exception e) {
+		} catch (Exception e) {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Create an ImageIcon from an image that is stored as a resource.
+	 * 
 	 * @param pathToResource the path to the resource.
 	 * @return the ImageIcon, or null if the resource can't be located.
 	 */
@@ -68,11 +70,12 @@ public class Util {
 		else
 			return new ImageIcon(img);
 	}
-	
+
 	/**
-	 * Play a sound that is stored as a resource file.  If the resource
+	 * Play a sound that is stored as a resource file. If the resource
 	 * can't be located or can't be played, no sound is played, and
 	 * no exception is thrown.
+	 * 
 	 * @param pathToResource the path to the resource.
 	 */
 	public static void playSoundResource(String pathToResource) {
@@ -81,15 +84,15 @@ public class Util {
 			URL loc = cl.getResource(pathToResource);
 			AudioClip sound = JApplet.newAudioClip(loc);
 			sound.play();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.out.println("Can't play soucd " + pathToResource);
 		}
 	}
-	
+
 	/**
-	 * Load an AudioClip from a resource file.  The clip can be played
+	 * Load an AudioClip from a resource file. The clip can be played
 	 * by calling its play() method.
+	 * 
 	 * @param pathToResource the path to the resource.
 	 * @return the audio clip, or null if the resource can't be loaded.
 	 */
@@ -100,15 +103,15 @@ public class Util {
 			return null;
 		try {
 			return JApplet.newAudioClip(loc);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Create a cursor from an image, with hot point at the upper left
 	 * corner (0,0).
+	 * 
 	 * @param image the image; can't be null.
 	 * @return a cursor that will show the image.
 	 */
@@ -119,17 +122,19 @@ public class Util {
 	/**
 	 * Create a cursor from an image resource file, with hot point at the
 	 * upper left corner (0,0).
+	 * 
 	 * @param pathToResource the path to the resource.
 	 * @return the cursor or, if the resource can't be loaded, the
-	 * default cursor.
+	 *         default cursor.
 	 */
 	public static Cursor createImageCursor(String pathToResource) {
 		return createImageCursor(pathToResource, 0, 0);
 	}
 
 	/**
-	 * Create a cursor from a resource file, with hot point at 
+	 * Create a cursor from a resource file, with hot point at
 	 * (hotSpotX, hotSpotY).
+	 * 
 	 * @param pathToResource the path to the resource.
 	 * @return a cursor that will show the image.
 	 */
@@ -139,20 +144,19 @@ public class Util {
 			return Cursor.getDefaultCursor();
 		else
 			return Toolkit.getDefaultToolkit().createCustomCursor(
-					img, new Point(hotSpotX,hotSpotY), pathToResource );
+					img, new Point(hotSpotX, hotSpotY), pathToResource);
 	}
-	
+
 	/**
-	 * Create a cursor from an image, with hot point at 
+	 * Create a cursor from an image, with hot point at
 	 * (hotSpotX, hotSpotY).
+	 * 
 	 * @param image the image; can't be null.
 	 * @return a cursor that will show the image.
 	 */
 	public static Cursor createImageCursor(Image image, int hotSpotX, int hotSpotY) {
 		return Toolkit.getDefaultToolkit().createCustomCursor(
-					image, new Point(hotSpotX,hotSpotY), null );
+				image, new Point(hotSpotX, hotSpotY), null);
 	}
-	
-	
-	
+
 }
