@@ -44,14 +44,11 @@ public class GuiDemo extends JFrame {
 		// Create the DrawPanel that fills most of the window, and customize it.
 
 		drawPanel = new DrawPanel();
-		drawPanel.getTextItem().setText(
-				"Big bugs have little bugs\n" +
-						"      Upon their backs to bite 'em,\n" +
-						"And little bugs have littler bugs,\n" +
-						"      And so it goes, ad infinitum.");
+		drawPanel.getTextItem().setText(getSaying());
 		drawPanel.getTextItem().setFontSize(36);
 		drawPanel.getTextItem().setJustify(TextItem.LEFT);
-		drawPanel.setBackgroundImage(Util.getImageResource("resources/images/mandelbrot.jpeg"));
+		final String defaultBackgroundPath = "resources/images/perseverance.jpeg";
+		drawPanel.setBackgroundImage(Util.getImageResource(defaultBackgroundPath));
 		content.add(drawPanel, BorderLayout.CENTER);
 
 		// Add an icon toolbar to the SOUTH position of the layout
@@ -113,6 +110,7 @@ public class GuiDemo extends JFrame {
 	 */
 	private JMenu makeBackgroundMenu() {
 		JMenu menu = new JMenu("Background");
+		menu.add(new ChooseBackgroundAction("Perseverance"));
 		menu.add(new ChooseBackgroundAction("Mandelbrot"));
 		menu.add(new ChooseBackgroundAction("Earthrise"));
 		menu.add(new ChooseBackgroundAction("Sunset"));
@@ -145,6 +143,7 @@ public class GuiDemo extends JFrame {
 		toolBar.add(newPictureAction);
 		toolBar.add(saveImageAction);
 		toolBar.addSeparator(new Dimension(18, 0));
+		toolBar.add(new ChooseBackgroundAction("Perseverance"));
 		toolBar.add(new ChooseBackgroundAction("Mandelbrot"));
 		toolBar.add(new ChooseBackgroundAction("Earthrise"));
 		toolBar.add(new ChooseBackgroundAction("Sunset"));
@@ -280,4 +279,8 @@ public class GuiDemo extends JFrame {
 		}
 	}
 
+	private String getSaying() {
+		return "If life beats you up,\n" + "  you have to withstand it and\n" + "   train really hard until\n"
+				+ " you have conquered it";
+	}
 }

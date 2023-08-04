@@ -39,6 +39,24 @@ public class TextMenu extends JMenu {
 				}
 			}
 		});
+		final JMenuItem lineHeighMultiplierMenuItem = new JMenuItem("Set Line Height...");
+		lineHeighMultiplierMenuItem.addActionListener(
+				(evt) -> {
+					double currentLineHeightMultiplier = panel.getTextItem().getLineHeightMultiplier();
+					String input = JOptionPane.showInputDialog(panel, "What line height multiplier do you want to use?",
+							currentLineHeightMultiplier);
+					if (input != null && input.trim().length() > 0) {
+						try {
+							final double newLineHeightMultiplier = Double.parseDouble(input.trim());
+							panel.getTextItem().setLineHeightMultiplier(newLineHeightMultiplier); // can throw
+																									// IllegalArgumentException
+							panel.repaint();
+						} catch (Exception e) {
+							JOptionPane.showMessageDialog(panel, input + " is not a legal text size.\n"
+									+ "Please enter a decimal number only.");
+						}
+					}
+				});
 		final JMenuItem size = new JMenuItem("Set Size...");
 		size.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -84,6 +102,7 @@ public class TextMenu extends JMenu {
 		add(change);
 		addSeparator();
 		add(size);
+		add(lineHeighMultiplierMenuItem);
 		add(color);
 		add(italic);
 		add(bold);
