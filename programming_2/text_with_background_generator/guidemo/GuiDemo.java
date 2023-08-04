@@ -59,6 +59,10 @@ public class GuiDemo extends JFrame {
 		IconSupport iconSupport = new IconSupport(drawPanel);
 		content.add(iconSupport.createToolbar(true), BorderLayout.SOUTH);
 
+		// Add a background toolbar to the NORTH position of the layout
+
+		content.add(makeBackgroundToolbar(), BorderLayout.NORTH);
+
 		// Create the menu bar and add it to the frame. The TextMenu is defined by
 		// a separate class. The other menus are created in this class.
 
@@ -129,6 +133,26 @@ public class GuiDemo extends JFrame {
 			}
 		});
 		return menu;
+	}
+
+	/**
+	 * Create the "Background" toolbar, using objects of type
+	 * ChooseBackgroundAction,
+	 * a class that is defined later in this file.
+	 */
+	private JToolBar makeBackgroundToolbar() {
+		JToolBar toolBar = new JToolBar("Set Background");
+		toolBar.add(newPictureAction);
+		toolBar.add(saveImageAction);
+		toolBar.addSeparator(new Dimension(18, 0));
+		toolBar.add(new ChooseBackgroundAction("Mandelbrot"));
+		toolBar.add(new ChooseBackgroundAction("Earthrise"));
+		toolBar.add(new ChooseBackgroundAction("Sunset"));
+		toolBar.add(new ChooseBackgroundAction("Cloud"));
+		toolBar.add(new ChooseBackgroundAction("Eagle_nebula"));
+		toolBar.add(new ChooseBackgroundAction("Custom..."));
+		toolBar.add(new ChooseBackgroundAction("Color..."));
+		return toolBar;
 	}
 
 	private AbstractAction newPictureAction = new AbstractAction("New",
